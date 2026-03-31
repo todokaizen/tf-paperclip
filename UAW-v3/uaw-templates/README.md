@@ -18,12 +18,9 @@ To initialize a new project under the Universal Agentic Workflow:
      specs/               <- spec files for non-exploratory work
        spec-template.md   <- copy and rename per spec
      archive/             <- dated resume.md copies from prior sessions
-     pipeline-config.yaml <- role map and phase rules for this project
    ```
 
 3. Fill in `resume.md` - project name, phase, objective.
-
-4. Fill in `pipeline-config.yaml` - replace placeholders with your Paperclip agent names.
 
 ## Paperclip Integration
 
