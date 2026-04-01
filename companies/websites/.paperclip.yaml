@@ -1,0 +1,95 @@
+schema: "paperclip/v1"
+agents:
+  coordinator:
+    role: "pm"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 100
+        dangerouslySkipPermissions: false
+    permissions:
+      canCreateAgents: false
+  fe:
+    role: "engineer"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 300
+        dangerouslySkipPermissions: false
+  content:
+    role: "general"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 200
+        dangerouslySkipPermissions: false
+projects:
+  todofoco:
+    status: "in_progress"
+    workspaces:
+      todofoco:
+        name: "todofoco"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/websites/TodoFoco"
+        visibility: "default"
+  galileo-curie:
+    status: "in_progress"
+    workspaces:
+      galileo-curie:
+        name: "galileo-curie"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/websites/GalileoCurie"
+        visibility: "default"
+  galileos-circle:
+    status: "in_progress"
+    workspaces:
+      galileos-circle:
+        name: "galileos-circle"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/websites/GalileosCircle"
+        visibility: "default"
+  tfeval-ui:
+    status: "in_progress"
+    workspaces:
+      tfeval-ui:
+        name: "tfeval-ui"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/websites/TFEval-UI"
+        visibility: "default"
+  todofoco-edu:
+    status: "in_progress"
+    workspaces:
+      todofoco-edu:
+        name: "todofoco-edu"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/websites/TodoFocoEdu"
+        visibility: "default"
+  tflabs-web:
+    status: "in_progress"
+    workspaces:
+      tflabs-web:
+        name: "tflabs-web"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/websites/TFLabs"
+        visibility: "default"
+sidebar:
+  agents:
+    - "coordinator"
+    - "fe"
+    - "content"
+  projects:
+    - "todofoco"
+    - "galileo-curie"
+    - "galileos-circle"
+    - "tfeval-ui"
+    - "todofoco-edu"
+    - "tflabs-web"
