@@ -72,14 +72,23 @@ They touch at exactly one point: Paperclip launches an agent on a task in a work
 
 ### Company Structure
 
-One Paperclip company represents the entire operation. Each active project (TFLabs, OpenBrain, GalileosCircle, NineHumanNeeds, and future projects) is a Paperclip project within that company. Each project has a workspace pointing to its repo on disk.
+Each business entity is a **separate Paperclip company** — fully isolated agents, budgets, and projects. A master template defines all agent types; it's imported once per company, activating only the agents that company needs.
 
 ```
-Company: "Ker's Lab"
-  ├── Project: TFLabs         → workspace: /path/to/tflabs
-  ├── Project: OpenBrain      → workspace: /path/to/openbrain
-  ├── Project: GalileosCircle → workspace: /path/to/galileos
-  └── Project: NineHumanNeeds → workspace: /path/to/nhn
+Company: TFLabs
+  ├── Project: TFLabs-poc     → workspace: /path/to/tflabs-poc
+  ├── Project: TFLabs-FE      → workspace: /path/to/tflabs-fe
+  └── Project: TFLabs-Evals   → workspace: /path/to/tflabs-evals
+
+Company: TFEdu
+  ├── Project: TFChem          → workspace: /path/to/tfchem
+  ├── Project: TFBio           → workspace: /path/to/tfbio
+  ├── Project: Galileo-Circle  → workspace: /path/to/galileo-circle
+  └── Project: Galileo-Curie   → workspace: /path/to/galileo-curie
+
+Company: NHN
+Company: TFTrading
+Company: TFOpenBrain
 ```
 
 UAW v3 files live in each repo and are self-sufficient:
@@ -94,20 +103,23 @@ project-root/
 
 ### Agent Model
 
-Agents are **role-agnostic** — any agent can fill any pipeline role. Role assignment is orchestration config, not agent identity.
+Agents are **stack-specialized** (defined by capability, not AI tool) and **role-agnostic** (any agent can fill any pipeline role). Role assignment is per-project orchestration config.
 
-Agents are registered **per-project** because projects differ in stack, instructions, and budget. Each project gets its own instances:
+Agents are named **stack-first with company suffix**: `python-tflabs`, `fe-tflabs`, `coordinator-tfedu`.
 
-```
-Project: TFLabs (Python)
-  ├── Coordinator-TFLabs  (claude_local, orchestration instructions)
-  ├── Claude-TFLabs       (claude_local, Python-tuned, budget: $X)
-  ├── Codex-TFLabs        (codex_local, budget: $Y)
-  ├── AntiGrav-TFLabs     (process adapter)
-  └── Gemini-TFLabs       (gemini_local, budget: $Z)
-```
+A master template defines all agent types. Each company imports it and activates the relevant agents:
 
-Available adapters: `claude_local`, `codex_local`, `gemini_local`, `cursor_local`, `process`.
+| Agent | Expertise | Paperclip Role |
+|-------|-----------|----------------|
+| coordinator | Pipeline state machine | pm |
+| python | Python, LangGraph, FastAPI, data pipelines | engineer |
+| fe | Next.js, React, TypeScript, Tailwind | engineer |
+| devops | Docker, CI/CD, GitHub Actions, infra | devops |
+| content | Technical writing, docs, educational content | general |
+| research | Literature review, analysis, evaluation | researcher |
+| crypto | Cryptocurrency markets, trading, blockchain | engineer |
+
+All default to `claude_local` adapter. Operator changes adapter per company as needed. Agents can be renamed or new specialized variants created (e.g., `python-tflabs-langchain`).
 
 ### Coordinator Agent
 
@@ -183,22 +195,22 @@ Coordinator reads ~/.paperclip/pipelines/{project}.yaml
 Coordinator creates sub-tasks per phase_rules[phase]:
 
   Stage: spec_writer
-    └── Sub-task assigned to Codex-TFLabs
-        Paperclip auto-wakes Codex-TFLabs
+    └── Sub-task assigned to python-tflabs
+        Paperclip auto-wakes python-tflabs
         Agent lands in workspace, reads CLAUDE.md, writes spec
         Agent completes → coordinator sees completion
         Approval gate → coordinator requests approval, pauses
         You review spec → approve
 
   Stage: executor
-    └── Sub-task assigned to Claude-TFLabs
-        Paperclip auto-wakes Claude-TFLabs
+    └── Sub-task assigned to python-tflabs
+        Paperclip auto-wakes python-tflabs
         Agent lands in workspace, reads CLAUDE.md + spec, implements
         Agent completes → coordinator sees completion
 
   Stage: reviewer
-    └── Sub-task assigned to AntiGrav-TFLabs
-        Paperclip auto-wakes AntiGrav-TFLabs
+    └── Sub-task assigned to devops-tflabs
+        Paperclip auto-wakes devops-tflabs
         Agent validates against done condition, produces proof
         Agent completes → coordinator sees completion
         Approval gate → coordinator requests approval, pauses
@@ -281,7 +293,7 @@ Repeatable steps for bringing a new project into the setup:
 
 **Step 2: Create the Paperclip project.** Project name, workspace pointing to repo path, linked to a company goal.
 
-**Step 3: Register project agents.** Create per-project agent instances (Coordinator, Claude, Codex, AntiGravity, Gemini as needed) with project-specific adapter config and budgets.
+**Step 3: Import agents.** Import the master template (`paperclipai company import ./master-template --new-company-name "CompanyName"`). Rename agents with company suffix (e.g., `python-tflabs`). Deactivate agents this company doesn't need.
 
 **Step 4: Create pipeline config.** Write `~/.paperclip/pipelines/{project}.yaml` with phase rules, role assignments, and approval gates.
 
@@ -295,8 +307,10 @@ Repeatable steps for bringing a new project into the setup:
 2. **Paperclip never decides correctness** — it coordinates, records, enforces workflow; validation is external
 3. **Coordinator is a state machine** — routes tasks, does not judge; reports failures, does not fix them
 4. **Per-project coordinators** — run in parallel across projects, no shared state
-5. **Role-agnostic agents** — any agent can fill any role; assignment is config, not identity
-6. **Per-project agent instances** — different configs, budgets per project
+5. **Stack-specialized, role-agnostic agents** — agents defined by capability (python, fe, devops), any can fill any pipeline role
+6. **Separate companies per business entity** — TFLabs, TFEdu, NHN, TFTrading, TFOpenBrain — fully isolated
+7. **Master template** — one template defines all agent types, imported per company
+8. **Stack-first naming** — `python-tflabs`, `fe-tfedu`, `coordinator-nhn`
 7. **Pipeline config outside repos** — lives at `~/.paperclip/pipelines/`, orchestration concern not workflow concern
 8. **Paperclip is replaceable** — removing it changes only who kicks off jobs
 9. **UAW in the repo is self-sufficient** — agents follow it autonomously regardless of orchestrator

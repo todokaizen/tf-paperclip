@@ -27,14 +27,14 @@ phase_rules:
     - reviewer
 
 # Role assignments: which Paperclip agent fills each role.
-# Use the agent name as registered in Paperclip (e.g., "Claude-TFLabs").
+# Use the agent name as registered in Paperclip (e.g., "python-tflabs").
 # Any agent can fill any role.
 # For fan-out (competing outputs), use a list of agent names.
 role_assignments:
-  spec_writer: "Codex-PROJECTNAME"
-  spec_validator: "Claude-PROJECTNAME"
-  executor: "Claude-PROJECTNAME"
-  reviewer: "AntiGrav-PROJECTNAME"
+  spec_writer: "python-COMPANYNAME"
+  spec_validator: "python-COMPANYNAME"
+  executor: "python-COMPANYNAME"
+  reviewer: "python-COMPANYNAME"
 
 # Approval gates: stages after which the coordinator pauses for operator review.
 # The coordinator creates a Paperclip approval request and waits.
