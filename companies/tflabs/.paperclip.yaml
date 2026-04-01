@@ -1,0 +1,71 @@
+schema: "paperclip/v1"
+agents:
+  coordinator:
+    role: "pm"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 100
+        dangerouslySkipPermissions: false
+    permissions:
+      canCreateAgents: false
+  python:
+    role: "engineer"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 300
+        dangerouslySkipPermissions: false
+  fe:
+    role: "engineer"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 300
+        dangerouslySkipPermissions: false
+  devops:
+    role: "devops"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 200
+        dangerouslySkipPermissions: false
+  research:
+    role: "researcher"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 300
+        dangerouslySkipPermissions: false
+projects:
+  tflabs-poc:
+    status: "in_progress"
+    workspaces:
+      tflabs-poc:
+        name: "tflabs-poc"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/tflabs-poc"
+        visibility: "default"
+  tflabs-edu-fe:
+    status: "in_progress"
+    workspaces:
+      tflabs-edu-fe:
+        name: "tflabs-edu-fe"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/Users/ker/_Projects/Active/MentorMesh/tflabs-edu-fe"
+        visibility: "default"
+sidebar:
+  agents:
+    - "coordinator"
+    - "python"
+    - "fe"
+  projects:
+    - "tflabs-poc"
+    - "tflabs-edu-fe"
