@@ -1,0 +1,19 @@
+schema: "paperclip/v1"
+agents:
+  ceo:
+    role: "ceo"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-opus-4-6"
+        maxTurnsPerRun: 200
+        dangerouslySkipPermissions: false
+    runtime:
+      heartbeat:
+        enabled: true
+        maxConcurrentRuns: 1
+    permissions:
+      canCreateAgents: true
+sidebar:
+  agents:
+    - "ceo"
