@@ -7,7 +7,7 @@ agents:
       config:
         model: "claude-sonnet-4-6"
         maxTurnsPerRun: 100
-        dangerouslySkipPermissions: false
+        dangerouslySkipPermissions: true
     permissions:
       canCreateAgents: false
   spec-writer:
@@ -23,7 +23,7 @@ agents:
       config:
         model: "claude-sonnet-4-6"
         maxTurnsPerRun: 300
-        dangerouslySkipPermissions: false
+        dangerouslySkipPermissions: true
   validator:
     role: "qa"
     adapter:
@@ -37,7 +37,7 @@ agents:
       config:
         model: "claude-opus-4-6"
         maxTurnsPerRun: 200
-        dangerouslySkipPermissions: false
+        dangerouslySkipPermissions: true
 projects:
   todofoco:
     status: "in_progress"
