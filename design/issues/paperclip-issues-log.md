@@ -87,3 +87,21 @@ Issues discovered during TodoFoco governance framework implementation. Tracked f
 **Suggested upstream fix:** Either document this requirement clearly in adapter docs, or add `--skip-git-repo-check` as a configurable option in the codex_local adapter config.
 
 **Our local fix:** Ensure all project directories are git repos before agent work begins (added to onboarding flow).
+
+---
+
+## Issue 6: Superpowers plugin injects ~200k tokens on every agent heartbeat
+
+**Date:** 2026-04-03
+**Severity:** High (cost impact)
+**Component:** superpowers plugin SessionStart hook (user-installed, not Paperclip)
+
+**Problem:** The superpowers plugin's SessionStart hook fires on every Claude Code session start, including Paperclip agent heartbeats. It injects the full `using-superpowers` skill text (~200k tokens) into every agent wake. Over 10 VentureLead heartbeats, that's ~2M tokens of unused context.
+
+**Impact:** Agents don't use superpowers skills (brainstorming, TDD, etc.) — they follow Paperclip skill + UAW contract. The superpowers injection is pure waste in headless agent runs.
+
+**Root cause:** The superpowers hook has no way to distinguish between interactive user sessions and headless agent heartbeats.
+
+**Our local fix:** Patched `~/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.{6,7}/hooks/session-start` to skip injection when `PAPERCLIP_RUN_ID` is set. **This patch will be overwritten if superpowers auto-updates.** Re-apply after updates.
+
+**Suggested upstream fix (superpowers):** Check for `PAPERCLIP_RUN_ID` or a generic `CI`/`HEADLESS` env var and skip injection for non-interactive sessions.
