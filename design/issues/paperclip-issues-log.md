@@ -60,17 +60,19 @@ Issues discovered during TodoFoco governance framework implementation. Tracked f
 
 ## Issue 4: Company deletion returns 500 error via CLI
 
-**Date:** 2026-04-02
-**Severity:** Low (workaround exists)
-**Component:** CLI `company delete` command
+**Date:** 2026-04-02 (confirmed 2026-04-04)
+**Severity:** Medium (blocks standard workflow, forces DB reset)
+**Component:** `companyService.remove()` in `server/src/services/companies.ts`
 
-**Problem:** `pnpm paperclipai company delete <id> --yes --confirm <id>` returns API error 500 for all companies. Likely a cascade constraint in the database.
+**Problem:** `pnpm paperclipai company delete <id> --yes --confirm <id>` returns API error 500 for all companies that have agents, issues, or runs. The `remove()` function manually cascades deletes across child tables but likely misses one or more tables with foreign key constraints, causing a database error.
 
-**Impact:** Could not clean up duplicate companies from repeated imports. Had to use DB reset as workaround.
+**Confirmed bug:** The delete code at `server/src/services/companies.ts:254-282` manually deletes from ~15 child tables in order before deleting the company row. A missing table in this sequence causes the 500. This is not a CLI syntax issue — the API itself fails.
 
-**Suggested upstream fix:** Company deletion should handle cascade constraints gracefully, or the error message should indicate which constraint is blocking.
+**Impact:** Cannot clean up companies through the intended interface. Forces DB reset (`rm -rf ~/.paperclip/instances/default/db`) which destroys all data including cost tracking history needed for A/B comparisons.
 
-**Our local fix:** Reset DB (`rm -rf ~/.paperclip/instances/default/db`) when clean slate needed.
+**Suggested upstream fix:** Add missing table(s) to the cascade delete sequence, or use `ON DELETE CASCADE` in the schema foreign keys instead of manual cascade.
+
+**Our local fix:** DB reset when clean slate needed. Avoid deleting companies — reimport with `--target existing` and `--collision skip` instead.
 
 ---
 
