@@ -2,6 +2,8 @@
 
 Date: 2026-04-04
 Status: draft
+Version: 1.0
+Supersedes: none
 
 ## Problem
 

@@ -1,5 +1,10 @@
 # TodoFoco AI Governance Framework (Phase 1 - Simplified)
 
+Date: 2026-04-01
+Status: current
+Version: 1.0
+Supersedes: none
+
 ## Overview
 
 This document defines a **minimal, operational governance framework** for orchestrating AI agents across multiple ventures under TodoFoco.

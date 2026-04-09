@@ -1,7 +1,8 @@
-# Design: Paperclip + UAW v3 Integration with Governance Framework - Pase 1
+# Design: Paperclip + UAW v3 Integration with Governance Framework - Phase 1
 
 Date: 2026-04-02
 Status: draft
+Version: 1.0
 Supersedes: 2026-03-30-paperclip-uaw-integration-design.md
 
 ## Objective

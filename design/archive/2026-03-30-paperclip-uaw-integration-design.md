@@ -1,7 +1,9 @@
 # Design: Paperclip + UAW v3 Integration
 
 Date: 2026-03-30 (revised 2026-03-31)
-Status: accepted
+Status: archived
+Version: 1.0
+Supersedes: none
 
 ## Objective
 

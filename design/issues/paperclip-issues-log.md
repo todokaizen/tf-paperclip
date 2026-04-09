@@ -1,5 +1,10 @@
 # Paperclip Issues Log
 
+Date: 2026-04-03
+Status: current
+Version: 1.0
+Supersedes: none
+
 Issues discovered during TodoFoco governance framework implementation. Tracked for potential upstream reporting.
 
 ---

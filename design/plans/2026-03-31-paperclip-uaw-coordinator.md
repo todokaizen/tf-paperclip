@@ -1,5 +1,10 @@
 # Paperclip + UAW v3 Coordinator Setup Plan
 
+Date: 2026-03-31
+Status: current
+Version: 1.0
+Supersedes: 2026-03-30-paperclip-uaw-integration.md
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Add a coordinator agent to the company package, create pipeline config templates, remove pipeline-config.yaml from UAW templates (wrong layer), and update all docs to reflect the coordinator-driven workflow.

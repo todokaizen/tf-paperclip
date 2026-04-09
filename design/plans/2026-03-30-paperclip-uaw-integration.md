@@ -1,5 +1,10 @@
 # Paperclip + UAW v3 Integration Plan (Configuration Only)
 
+Date: 2026-03-30
+Status: archived
+Version: 1.0
+Supersedes: none
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Configure Paperclip to orchestrate UAW v3 agent workflows across multiple projects using only config files, company packages, and UAW templates — no Paperclip core code changes.
