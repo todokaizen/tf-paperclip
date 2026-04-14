@@ -24,6 +24,17 @@ agents:
         model: "claude-sonnet-4-6"
         maxTurnsPerRun: 300
         dangerouslySkipPermissions: true
+        env:
+          # Force subscription auth for the implementor: Claude Code uses
+          # ANTHROPIC_API_KEY if it's non-empty in the process env, else
+          # falls back to its logged-in subscription. Clearing it here
+          # shadows any key the host shell inherits, so the implementor
+          # always runs on the Claude Code / Max subscription.
+          # Orchestration agents (venture-lead, debugger) deliberately
+          # omit this override: they inherit whatever the host env has,
+          # so setting ANTHROPIC_API_KEY on the host pushes orchestration
+          # to API billing while this agent stays on the subscription.
+          ANTHROPIC_API_KEY: ""
   validator:
     role: "qa"
     adapter:

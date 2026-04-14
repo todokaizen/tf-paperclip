@@ -26,3 +26,28 @@ pnpm paperclipai company import ./companies/mock-website --new-company-name "Moc
 ## The fixture bug
 
 `fixture-repo/index.html` + `fixture-repo/styles.css` style the Submit button with `background: #888` (placeholder grey). The task in `projects/demo/` asks the implementor to change it to `#007BFF` and update `fixture-repo/tests/button.test.js` accordingly. Deterministic enough for repeatable measurement, wide enough to exercise spec-writer → implementor → validator.
+
+## Billing split (API vs subscription)
+
+Anthropic no longer supports Claude subscriptions over oauth for programmatic tools like OpenClaw. The practical TF-Devflow pattern is: orchestration agents pay per-token via the Anthropic API, the implementor consumes the subscription (where Claude Code / Max credits live).
+
+This fixture encodes that split via per-agent env in `.paperclip.yaml`:
+
+| Agent | Adapter | `env.ANTHROPIC_API_KEY` | Auth used |
+|---|---|---|---|
+| venture-lead | claude_local | (inherited from host) | API, if host has the key |
+| debugger | claude_local | (inherited from host) | API, if host has the key |
+| implementor | claude_local | `""` (empty — shadows host) | Subscription (Claude Code login) |
+| spec-writer | codex_local | n/a | Codex auth (separate) |
+| validator | codex_local | n/a | Codex auth (separate) |
+
+`claude_local` treats an empty `ANTHROPIC_API_KEY` the same as unset and falls back to the CLI's logged-in subscription (`packages/adapters/claude-local/src/server/execute.ts:98-105`). That's why `""` on the implementor is safe — it's explicitly "ignore the inherited key."
+
+To run with this split, the host shell (the one launching `paperclipai run`) needs both:
+
+1. `ANTHROPIC_API_KEY` exported — consumed by venture-lead / debugger.
+2. Claude Code logged in to the subscription — consumed by the implementor.
+
+If the host has no `ANTHROPIC_API_KEY`, every `claude_local` agent falls back to the subscription (no billing split). If Claude Code isn't logged in, the implementor fails at run time.
+
+**Don't commit the API key.** `ANTHROPIC_API_KEY` lives in the host shell (`.envrc`, launchd plist, keychain-backed export, whatever), not in `.paperclip.yaml`. The only env value in this config is `""` on the implementor, which is public by intent.
