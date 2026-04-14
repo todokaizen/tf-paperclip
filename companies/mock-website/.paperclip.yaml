@@ -1,0 +1,57 @@
+schema: "paperclip/v1"
+agents:
+  venture-lead:
+    role: "pm"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 100
+        dangerouslySkipPermissions: true
+    permissions:
+      canCreateAgents: false
+  spec-writer:
+    role: "engineer"
+    adapter:
+      type: "codex_local"
+      config:
+        dangerouslyBypassApprovalsAndSandbox: false
+  implementor:
+    role: "engineer"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-sonnet-4-6"
+        maxTurnsPerRun: 300
+        dangerouslySkipPermissions: true
+  validator:
+    role: "qa"
+    adapter:
+      type: "codex_local"
+      config:
+        dangerouslyBypassApprovalsAndSandbox: false
+  debugger:
+    role: "qa"
+    adapter:
+      type: "claude_local"
+      config:
+        model: "claude-opus-4-6"
+        maxTurnsPerRun: 200
+        dangerouslySkipPermissions: true
+projects:
+  demo:
+    status: "in_progress"
+    workspaces:
+      demo:
+        name: "demo"
+        isPrimary: true
+        sourceType: "local_path"
+        cwd: "/tmp/mock-website-current"
+        visibility: "default"
+sidebar:
+  agents:
+    - "venture-lead"
+    - "implementor"
+    - "spec-writer"
+  projects:
+    - "demo"

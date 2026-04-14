@@ -1,0 +1,45 @@
+# Pipeline Configuration Template
+#
+# Copy this file to ~/.paperclip/pipelines/{project-name}.yaml
+# and fill in the agent names for your project.
+#
+# This file is Layer 1 (Paperclip orchestration config).
+# It is NOT part of the project repo.
+# The ventureLead reads it to route tasks through workflow stages.
+
+# Phase rules: which pipeline stages run for each phase.
+# Stages execute in order.
+phase_rules:
+  exploratory:
+    - executor
+  structural:
+    - spec_writer
+    - executor
+  production:
+    - spec_writer
+    - spec_validator
+    - executor
+    - reviewer
+  durable_knowledge:
+    - spec_writer
+    - spec_validator
+    - executor
+    - reviewer
+
+# Role assignments: which Paperclip agent fills each workflow stage.
+# Use the agent name as registered in Paperclip (e.g., "spec-writer-tflabs").
+role_assignments:
+  spec_writer: "spec-writer-COMPANYNAME"
+  spec_validator: "validator-COMPANYNAME"
+  executor: "implementor-COMPANYNAME"
+  reviewer: "validator-COMPANYNAME"
+  debugger: "debugger-COMPANYNAME"
+
+# Approval gates: stages after which the ventureLead pauses for human review.
+approval_gates:
+  - after: spec_writer
+  - after: reviewer
+
+# Failure escalation: after N implementor failures, route to debugger.
+failure_escalation:
+  executor_retries_before_debugger: 3

@@ -1,0 +1,10 @@
+{
+  "name": "mock-website-fixture",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Tiny static website used as the TF-Devflow token-efficiency benchmark target.",
+  "scripts": {
+    "test": "node --test 'tests/**/*.test.js'"
+  }
+}
