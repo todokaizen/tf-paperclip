@@ -88,11 +88,33 @@ That's the cost of "spin up a fresh VentureLead session, read the inbox, discove
 - **Codex adapter.** `spec-writer` and `validator` use `codex_local` in this fixture (inherited from master-template). They don't run in the baseline above because the VL blocks before dispatch, but if you wire up the pipeline config they'll need Codex CLI installed.
 - **Pipeline config drift.** `~/.paperclip/pipelines/*.yaml` is per-project state outside this repo. If you want a reproducible full-pipeline benchmark, pin `demo.yaml` — or copy it from `companies/mock-website/pipelines/template.yaml` and substitute the agent names. Left out of Phase 1 on purpose.
 
-## Phase 2 (not yet built)
+## Phase 2 — first A/B: superpowers patch ON vs OFF
 
-- `variants/` directory of `.paperclip.yaml` overlays, applied before each run
-- `compare.ts` that diffs two runs and reports which knob moved the number
-- First real A/B: superpowers-plugin patch ON vs OFF (expected ~200 k tokens/heartbeat delta — Issue 6)
-- Optional: pin a `demo.yaml` pipeline config so the full spec-writer → implementor → validator chain runs and we measure the aggregate
+The superpowers plugin's `SessionStart` hook (at `~/.claude/plugins/cache/claude-plugins-official/superpowers/<version>/hooks/session-start`) injects the `using-superpowers` skill into every Claude Code session. Paperclip agent heartbeats are Claude Code sessions, so this injection lands in every wake. Our local patch short-circuits the hook when `PAPERCLIP_RUN_ID` is present. Issue 6 claims the delta is ~200 k tokens per heartbeat — this A/B measures it for real.
 
-See `../../issues/paperclip-issues-log.md` for the underlying issue write-ups.
+Files:
+
+- `variants/superpowers/session-start.patched` — our patched hook (current state)
+- `variants/superpowers/session-start.unpatched` — the vanilla superpowers hook (patched minus the 6-line skip block; verified byte-identical otherwise)
+- `variants/superpowers/apply.sh patched|unpatched` — installs the selected variant into the live plugin dir (discovers the active version dynamically)
+- `variants/superpowers/ab.sh [N]` — runs N trials on each variant, tags results with `BENCH_VARIANT=superpowers-on|superpowers-off`, then calls `compare.sh`. Always restores the patched hook on exit via a `trap`, so even an interrupted run leaves Paperclip in the normal state.
+- `compare.sh <A> <B> [N]` — reads the most recent N result JSONs per variant and prints mean / min / max for cached-input, output, and cost, plus a B−A delta.
+
+Run it:
+
+```sh
+export MOCK_COMPANY_ID=…
+export MOCK_VL_AGENT_ID=…
+export MOCK_PROJECT_ID=…
+./variants/superpowers/ab.sh 3    # 3 trials each = 6 heartbeats total
+```
+
+At 3 trials × 2 variants and ~90 s per run, expect ~9 minutes wall-clock. Larger N tightens the confidence band against the ~2× LLM-path variance documented above.
+
+## Phase 2+ (later)
+
+- Wire `~/.paperclip/pipelines/demo.yaml` into the fixture setup so the VentureLead can actually dispatch sub-tasks (spec-writer → implementor → validator). Unlocks full-pipeline measurements instead of the VL-only "block on missing config" path.
+- Pipeline-mode matrix from `design/proposals/pipeline-flexibility-proposal.md`: `supervised` / `automated` / `spec_provided` / `quick`. Each mode is a different pipeline config variant; the runner swaps `~/.paperclip/pipelines/demo.yaml` between each.
+- Combined matrix: `{patch on, off} × {4 modes} × N trials`. Expensive, but the scaffolding above composes.
+
+See `../../issues/paperclip-issues-log.md` for the underlying issue write-ups, and `../../proposals/pipeline-flexibility-proposal.md` for the mode matrix spec.
