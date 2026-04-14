@@ -24,7 +24,7 @@
 #
 # Env overrides for variants (Phase 2):
 #   BENCH_VARIANT       label in the results filename (default: baseline)
-#   BENCH_TIMEOUT_SECS  max wait for the run to complete (default: 300)
+#   BENCH_TIMEOUT_SECS  max wait for the run to complete (default: 600)
 #
 # Exit codes:
 #   0 success
@@ -43,7 +43,7 @@ mkdir -p "$results_dir"
 : "${MOCK_PROJECT_ID:?set MOCK_PROJECT_ID to the demo project UUID (GET /api/companies/<id>/projects)}"
 api_base="${PAPERCLIP_API_BASE:-http://localhost:3100}"
 variant="${BENCH_VARIANT:-baseline}"
-timeout_secs="${BENCH_TIMEOUT_SECS:-300}"
+timeout_secs="${BENCH_TIMEOUT_SECS:-600}"   # 10 min — superpowers-injected runs can take 6+ min
 
 if [[ -n "${PAPERCLIP_API_KEY:-}" ]]; then
   auth=(-H "Authorization: Bearer ${PAPERCLIP_API_KEY}")

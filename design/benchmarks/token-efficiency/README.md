@@ -97,7 +97,7 @@ Files:
 - `variants/superpowers/session-start.patched` — our patched hook (current state)
 - `variants/superpowers/session-start.unpatched` — the vanilla superpowers hook (patched minus the 6-line skip block; verified byte-identical otherwise)
 - `variants/superpowers/apply.sh patched|unpatched` — installs the selected variant into the live plugin dir (discovers the active version dynamically)
-- `variants/superpowers/ab.sh [N]` — runs N trials on each variant, tags results with `BENCH_VARIANT=superpowers-on|superpowers-off`, then calls `compare.sh`. Always restores the patched hook on exit via a `trap`, so even an interrupted run leaves Paperclip in the normal state.
+- `variants/superpowers/ab.sh [N]` — runs N trials on each variant, tags results with `BENCH_VARIANT=superpowers-on` (unpatched hook, skill injected — as if the feature were live) or `BENCH_VARIANT=superpowers-off` (patched hook, skill skipped — our normal prod state). Calls `compare.sh superpowers-off superpowers-on N` so the printed delta is (skill-off) − (skill-on), i.e. "how much does having the patch save us." Always restores the patched hook on exit via a `trap`, so even an interrupted run leaves Paperclip in the normal state.
 - `compare.sh <A> <B> [N]` — reads the most recent N result JSONs per variant and prints mean / min / max for cached-input, output, and cost, plus a B−A delta.
 
 Run it:

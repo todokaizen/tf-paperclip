@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
-# Superpowers patch ON vs OFF — Phase 2 A/B driver.
+# Superpowers ON vs OFF — Phase 2 A/B driver.
 #
-# Runs the token-efficiency benchmark N times with the patched
-# session-start hook (variant tag: superpowers-on), then N times with
-# the unpatched hook (variant tag: superpowers-off), then calls
-# compare.sh to emit a markdown delta report.
+# Variant tags name the *superpowers feature*, not our patch:
+#   superpowers-on   = vanilla hook, skill IS injected (our patch OFF)
+#   superpowers-off  = patched hook, skill skipped     (our patch ON)
+#
+# So `on` is the "every agent wake gets the skill" world and `off` is
+# the "patched/suppressed" world we ship in. Deltas printed by
+# compare.sh are B minus A, so `compare.sh on off` reads as
+# (skill-suppressed) − (skill-injected).
+#
+# Runs the token-efficiency benchmark N times on each variant and
+# calls compare.sh to emit a markdown delta report.
 #
 # Always restores the patched hook at the end, even on interrupt.
 #
@@ -46,8 +53,8 @@ run_variant() {
   done
 }
 
-run_variant "superpowers-on"  patched
-run_variant "superpowers-off" unpatched
+run_variant "superpowers-on"  unpatched   # skill IS injected
+run_variant "superpowers-off" patched     # skill SKIPPED (default prod state)
 
 # Trap restores patched before compare runs.
 restore_patched
@@ -57,4 +64,4 @@ echo ""
 echo "════════════════════════════════════════════════════════════════"
 echo "  A/B summary"
 echo "════════════════════════════════════════════════════════════════"
-"$bench_dir/compare.sh" superpowers-on superpowers-off "$n"
+"$bench_dir/compare.sh" superpowers-off superpowers-on "$n"
