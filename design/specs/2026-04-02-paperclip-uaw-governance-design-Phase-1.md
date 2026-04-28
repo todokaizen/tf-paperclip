@@ -5,6 +5,8 @@ Status: draft
 Version: 1.0
 Supersedes: 2026-03-30-paperclip-uaw-integration-design.md
 
+> **Note (2026-04-27):** Orchestrator-agnostic principles in this document — the system invariant, three-check spec review protocol, decision classification, role abstractions, layered architecture concept, enhanced spec template — were extracted into [tf-devflow/governance-design.md](https://github.com/todokaizen/tf-devflow/blob/main/governance-design.md). This file is now the **Paperclip-specific implementation** of those principles. See `design/decisions.md` (2026-04-27 entry) for the split rationale.
+
 ## Objective
 
 Orchestrate AI agent workflows across multiple ventures using Paperclip as the control plane, Paperclip-UAW v1 as the in-repo workflow contract, and the TodoFoco Governance Framework for decision classification and escalation. Everything is portable — if Paperclip is replaced, only who kicks off jobs changes.

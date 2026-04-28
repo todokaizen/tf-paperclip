@@ -159,3 +159,35 @@ Context: No persistent task tracking existed outside of git commits and ephemera
 Decision: Create design/resume.md and design/decisions.md following UAW templates. Use design/ as the project root for UAW state files (specs/, archive/, resume.md, decisions.md already colocated there).
 Rationale: Follow our own contract. If we're building a UAW-based system, this repo should use the same session protocol.
 Consequence: Future sessions start by reading design/resume.md → design/decisions.md → active spec. Session end protocol applies.
+
+---
+
+## 2026-04-27: Rename to tf-paperclip and split into three-tier structure (uaw / tf-devflow / tf-paperclip)
+
+Context: This repo had accumulated two distinct kinds of content. About 60% was Paperclip-specific implementation (companies/, pipelines/, paperclip-uaw/, ARCHITECTURE.md, RUNBOOK.md, runtime tooling). About 30% was orchestrator-agnostic methodology (operator manifesto, decision rubrics, solo-operator advice, governance framework, three-check spec review protocol, pipeline-mode concepts). The remaining ~10% was mixed (the 2026-04-02 Phase 1 governance design spec, pipeline-flexibility-proposal.md, this decisions log).
+
+The repo had also been renamed twice: originally cloned as `paperclip` (upstream fork), renamed to `TF-Devflow` on 2026-04-13 to mark it as configurations on top of Paperclip, then renamed to `tf-paperclip` on 2026-04-27 — at which point "tf-devflow" was reframed as the methodology layer itself rather than this repo.
+
+Separately, the UAW v3 workflow definition was living in Google Drive (`TFLabs-Workflows/UAW-v3/`), which corrupts `.git/` directories and is not a sustainable host for a versioned artifact.
+
+Decision: Split into three parallel repos:
+- `uaw` (foundation) — UAW v3 operating contract + per-project templates, migrated out of Google Drive into a real git repo
+- `tf-devflow` (extension on UAW) — orchestrator-agnostic methodology: manifesto, decision rubrics (full + concise), solo-operator advice, governance framework, three-check spec review protocol, role abstractions, pipeline-mode concepts
+- `tf-paperclip` (this repo, Paperclip binding of tf-devflow) — companies/, pipelines/, paperclip-uaw/, master-template/, design/specs and design/plans for Paperclip-specific implementation, runtime tooling, benchmarks
+
+The 5 pure-methodology proposals (`2026-04-11-tf-paperclip-manifesto.md`, both decision rubrics, `2026-04-11-solo-operator-advice.md`, `Todofoco_AI_Governance_Framework_Proposal_phase1_simplified.md`) move to tf-devflow with flat filenames. Mixed files stay here as the Paperclip implementation; principle-only versions are extracted into tf-devflow as `governance-design.md` and `pipeline-modes.md`.
+
+Rationale: Three parallel repos preserve independent versioning. tf-paperclip can pin to tf-devflow@vN while tf-devflow tests against uaw@vN+1. A future orchestrator binding (Symphony, Cline, a custom orchestrator) can reuse tf-devflow without going through Paperclip. A future workflow lineage forking from UAW (the user's vault already shows sibling folders like `TDW-Workflow-Templates`, `TASK-OS-Templates`, `_New_Universal_Workflow`) can extend the foundation directly without inheriting tf-devflow's specific governance choices.
+
+Alternatives considered:
+- Keep everything in tf-paperclip, no split — rejected: methodology stays coupled to Paperclip, blocking future orchestrator swap. Other workflow lineages forking from UAW would have to re-derive the methodology from scratch.
+- Vendor tf-devflow into tf-paperclip as a frozen snapshot (e.g. `vendor/tf-devflow/`) — rejected: defeats single source of truth, requires manual snapshot updates, creates two places where methodology can be edited under pressure.
+- Nest uaw inside tf-devflow as a git submodule — rejected: forces shared release cadence, and future workflow lineages forking from UAW would have to either fork tf-devflow too or extract UAW back out.
+- Duplicate methodology files in both tf-devflow and tf-paperclip — rejected: drift hazard. Two copies will diverge under edit pressure with no enforcement mechanism. Single source of truth in tf-devflow chosen instead, with tf-paperclip cross-referencing by link.
+
+Consequence:
+- Methodology proposals removed from this repo; live in tf-devflow (initial commit 17502cf there). TF-PAPERCLIP.md and CLAUDE.md updated to declare this repo as the Paperclip binding of tf-devflow.
+- The three mixed files (2026-04-02 Phase 1 spec, pipeline-flexibility-proposal, this decisions log) keep their Paperclip-implementation content with cross-references to tf-devflow's principle layers.
+- UAW workflow definition migrated from Google Drive into the new uaw repo (initial commit 32fb29e). The original GDrive folder gets a stub README pointing to the new repo.
+- Future overlay docs in this repo continue to use `tf-paperclip` in names; methodology docs use `tf-devflow` (the rename discipline still applies inside each repo, just with different defaults).
+- Benchmark history in `design/benchmarks/token-efficiency/results/*.{log,json}` left untouched — those are dated artifacts of past runs and rewriting them would falsify history.

@@ -5,6 +5,8 @@ Status: draft
 Version: 1.0
 Supersedes: none
 
+> **Note (2026-04-27):** The orchestrator-agnostic mode concept (supervised / automated / spec_provided / quick) was extracted into [tf-devflow/pipeline-modes.md](https://github.com/todokaizen/tf-devflow/blob/main/pipeline-modes.md). This file remains as the **Paperclip-specific implementation** — concrete YAML schema, VentureLead dispatch logic, migration steps. See `design/decisions.md` (2026-04-27 entry) for the split rationale.
+
 ## Problem
 
 The current pipeline config is static — one set of phase rules, one set of approval gates. In practice, the operator needs different behaviors for different situations:
