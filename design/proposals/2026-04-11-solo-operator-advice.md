@@ -1,4 +1,4 @@
-# Solo Operator Advice: Running TF-Devflow Across Multiple Ventures
+# Solo Operator Advice: Running TF-Paperclip Across Multiple Ventures
 
 Date: 2026-04-11
 Status: advisory (not authoritative)
@@ -7,7 +7,7 @@ Related: design/specs/2026-04-02-paperclip-uaw-governance-design-Phase-1.md, des
 
 ## Context
 
-Keith is the sole developer running TF-Devflow across multiple ventures (TFLabs, NHN, WebSites, and eventually others). His stated concern: the Paperclip + UAW + Governance framework feels heavy for one person, but project and code drift across simultaneous ventures would be more costly than the ceremony overhead.
+Keith is the sole developer running TF-Paperclip across multiple ventures (TFLabs, NHN, WebSites, and eventually others). His stated concern: the Paperclip + UAW + Governance framework feels heavy for one person, but project and code drift across simultaneous ventures would be more costly than the ceremony overhead.
 
 This document captures the analysis and recommendations from that conversation, plus a specific adaptation Keith has decided on regarding spec authorship.
 
@@ -15,7 +15,7 @@ This document captures the analysis and recommendations from that conversation, 
 
 The right question is not "bureaucracy vs drift." The right question is whether the framework will be run with discipline, or whether steps will be skipped under pressure and the system will quietly degrade without anyone noticing. That second failure mode — governance theater — is what kills heavy frameworks in solo operator hands, and it matters more than the per-task overhead.
 
-Keith's instinct that drift is the larger cost for multi-project solo work is correct, and it is the right strategic call. Most solo developers fail at multi-project work specifically because of drift — losing context on Project A while working on Project B, re-deciding settled questions, or accumulating inconsistencies that compound into rewrite cost. TF-Devflow is designed to survive exactly this pattern.
+Keith's instinct that drift is the larger cost for multi-project solo work is correct, and it is the right strategic call. Most solo developers fail at multi-project work specifically because of drift — losing context on Project A while working on Project B, re-deciding settled questions, or accumulating inconsistencies that compound into rewrite cost. TF-Paperclip is designed to survive exactly this pattern.
 
 ## Why the Framework Fits a Solo Multi-Project Operator
 
@@ -73,7 +73,7 @@ The validator's `extra_behavior_detected` field and the system-wide invariant ("
 
 ## Concrete Rollout Recommendation
 
-The advice here is to resist the temptation to onboard all ventures at once. Pick the one where drift is most painful today — probably TFLabs, given it is the highest-complexity codebase and the AI platform. Run TF-Devflow on that project for two or three weeks with the full framework, honestly. Track how time actually splits between gates, execution oversight, and pure execution.
+The advice here is to resist the temptation to onboard all ventures at once. Pick the one where drift is most painful today — probably TFLabs, given it is the highest-complexity codebase and the AI platform. Run TF-Paperclip on that project for two or three weeks with the full framework, honestly. Track how time actually splits between gates, execution oversight, and pure execution.
 
 Use that calibration data to answer three questions before onboarding a second venture. Is gate time under 20% of total project time? Is the three-check spec review being run honestly on every production task? Is the resume.md / decisions.md pattern actually capturing enough state that context recovery works after a few days away? If any of those answers is no, fix the calibration before adding more ventures. If all three are yes, onboard the second venture and re-measure.
 

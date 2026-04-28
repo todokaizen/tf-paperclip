@@ -1,11 +1,11 @@
-# TF-Devflow Operating Manifesto
+# TF-Paperclip Operating Manifesto
 
 Date: 2026-04-11
 Status: living commitment
 
 ## Preamble
 
-This is what I commit to when running TF-Devflow across multiple ventures as a solo operator. These are not rules imposed on me by the framework — they are the principles that make the framework worth its overhead. If I am not running these, the framework is costing me more than it is buying, and the honest response is to either recalibrate or reduce my task volume. Not to quietly degrade the protocol.
+This is what I commit to when running TF-Paperclip across multiple ventures as a solo operator. These are not rules imposed on me by the framework — they are the principles that make the framework worth its overhead. If I am not running these, the framework is costing me more than it is buying, and the honest response is to either recalibrate or reduce my task volume. Not to quietly degrade the protocol.
 
 ## Commitments
 
@@ -21,7 +21,7 @@ This is what I commit to when running TF-Devflow across multiple ventures as a s
 
 **I notice governance theater and stop it.** If I catch myself classifying Significant decisions as Routine to save time, or approving specs without honestly running the three checks, I either update my classification rules to reflect reality or reduce my task volume. I never continue running the framework while quietly degrading it, because then I pay the cost of ceremony without the quality floor it is supposed to buy.
 
-**I onboard one project at a time.** I run TF-Devflow on one venture fully for two to three weeks, measure where my time actually goes, and only then expand. I resist the temptation to migrate all ventures at once, because I cannot calibrate what I have not measured.
+**I onboard one project at a time.** I run TF-Paperclip on one venture fully for two to three weeks, measure where my time actually goes, and only then expand. I resist the temptation to migrate all ventures at once, because I cannot calibrate what I have not measured.
 
 **I consult the CEO for portfolio decisions, not execution decisions.** The todofoco-CEO is my strategic advisor for which venture gets attention this week and what cross-venture priorities matter. It does not touch ventures directly. Strategy flows through me as concrete venture tasks, not as abstract direction passed to executors.
 
@@ -31,5 +31,5 @@ This is what I commit to when running TF-Devflow across multiple ventures as a s
 
 Related:
 - design/proposals/2026-04-11-solo-operator-advice.md — the analysis these commitments come from
-- design/proposals/2026-04-11-tf-devflow-decision-rubric.md — the decision aids that operationalize these commitments
+- design/proposals/2026-04-11-tf-paperclip-decision-rubric.md — the decision aids that operationalize these commitments
 - design/specs/2026-04-02-paperclip-uaw-governance-design-Phase-1.md — the architectural framework

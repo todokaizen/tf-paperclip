@@ -1,12 +1,12 @@
-# TF-Devflow
+# TF-Paperclip
 
-This repository is **not stock Paperclip**. It is a fork of [`paperclipai/paperclip`](https://github.com/paperclipai/paperclip) with the TF-Devflow overlay — configuration, company templates, and tooling that enable the **UAW (Unified Agent Workflow)** on top of the Paperclip runtime.
+This repository is **not stock Paperclip**. It is a fork of [`paperclipai/paperclip`](https://github.com/paperclipai/paperclip) with the TF-Paperclip overlay — configuration, company templates, and tooling that enable the **UAW (Unified Agent Workflow)** on top of the Paperclip runtime.
 
 See `README.md` for the underlying Paperclip project.
 
 ## What the overlay adds
 
-These top-level directories are TF-Devflow-specific. Everything else is upstream Paperclip.
+These top-level directories are TF-Paperclip-specific. Everything else is upstream Paperclip.
 
 | Path | Purpose |
 |------|---------|
@@ -18,7 +18,7 @@ These top-level directories are TF-Devflow-specific. Everything else is upstream
 
 ## Upstream relationship
 
-- `origin` → `git@github.com:todokaizen/tf-devflow.git` (this fork)
+- `origin` → `git@github.com:todokaizen/tf-paperclip.git` (this fork)
 - `upstream` → `git@github.com:paperclipai/paperclip.git` (Paperclip core)
 
 Pull upstream updates with:
@@ -30,7 +30,7 @@ git merge upstream/master
 
 ## Rename discipline
 
-TF-Devflow is a **configuration layer**, not a rebrand. The Paperclip system keeps its identity inside the repo so that upstream merges stay conflict-free.
+TF-Paperclip is a **configuration layer**, not a rebrand. The Paperclip system keeps its identity inside the repo so that upstream merges stay conflict-free.
 
 **Stays `paperclip` / `@paperclipai` / `PAPERCLIP_*`:**
 - All upstream files (`server/`, `ui/`, `cli/`, `packages/`, `doc/`, `releases/`, root `README.md`, `package.json`, etc.)
@@ -39,8 +39,8 @@ TF-Devflow is a **configuration layer**, not a rebrand. The Paperclip system kee
 - The `@paperclipai/*` monorepo scope
 - The `paperclip-uaw/` directory name (stable path for scripts)
 
-**TF-Devflow-named:**
+**TF-Paperclip-named:**
 - This file and `CLAUDE.md`
-- Overlay-specific documents whose names already include `tf-devflow`
+- Overlay-specific documents whose names already include `tf-paperclip`
 
-When adding new overlay content, name it after TF-Devflow; when editing upstream code, leave Paperclip references alone.
+When adding new overlay content, name it after TF-Paperclip; when editing upstream code, leave Paperclip references alone.

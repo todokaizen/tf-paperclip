@@ -1,6 +1,6 @@
 # Token-efficiency benchmark
 
-Measures how many tokens a TF-Devflow configuration burns on an assignment-triggered heartbeat. Phase 1 scope is deliberately small: **prove the pipe works, get a reproducible number, do not try to compare variants yet.**
+Measures how many tokens a TF-Paperclip configuration burns on an assignment-triggered heartbeat. Phase 1 scope is deliberately small: **prove the pipe works, get a reproducible number, do not try to compare variants yet.**
 
 ## What gets measured
 

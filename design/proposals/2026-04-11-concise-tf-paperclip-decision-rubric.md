@@ -1,4 +1,4 @@
-# TF-Devflow Pocket Rubric (Concise)
+# TF-Paperclip Pocket Rubric (Concise)
 
 Date: 2026-04-11
 Status: for recall, not rigid enforcement
@@ -57,6 +57,6 @@ Name one concrete risk, or state "none found after adversarial review."
 ---
 
 Related:
-- 2026-04-11-tf-devflow-decision-rubric.md — expanded version
-- 2026-04-11-tf-devflow-manifesto.md — commitments
+- 2026-04-11-tf-paperclip-decision-rubric.md — expanded version
+- 2026-04-11-tf-paperclip-manifesto.md — commitments
 - 2026-04-11-solo-operator-advice.md — analysis

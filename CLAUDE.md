@@ -1,17 +1,17 @@
-# CLAUDE.md — TF-Devflow overlay
+# CLAUDE.md — TF-Paperclip overlay
 
-This repo is a fork of [`paperclipai/paperclip`](https://github.com/paperclipai/paperclip) with the **TF-Devflow overlay** (UAW workflow configs, company templates, pipeline tooling). See `TF-DEVFLOW.md` for the full description. `AGENTS.md` is upstream Paperclip guidance — read it for engine-level context.
+This repo is a fork of [`paperclipai/paperclip`](https://github.com/paperclipai/paperclip) with the **TF-Paperclip overlay** (UAW workflow configs, company templates, pipeline tooling). See `TF-PAPERCLIP.md` for the full description. `AGENTS.md` is upstream Paperclip guidance — read it for engine-level context.
 
 ## Overlay boundary
 
-TF-Devflow-specific (safe to edit without upstream concerns):
+TF-Paperclip-specific (safe to edit without upstream concerns):
 
 - `companies/` — company packages
 - `master-template/` — scaffolding template
 - `pipelines/` — pipeline configs + tooling
 - `paperclip-uaw/` — UAW workflow scripts (install, sync, healthcheck, recover)
 - `design/` — architecture, runbooks, decisions, issues, proposals
-- `TF-DEVFLOW.md`, `CLAUDE.md` — this overlay's identity files
+- `TF-PAPERCLIP.md`, `CLAUDE.md` — this overlay's identity files
 
 Everything else is upstream Paperclip. Touching it invites merge conflicts on every `upstream/master` pull.
 
@@ -27,13 +27,13 @@ Do **not** rename any of these — they are the merge boundary:
 
 Do rename / name freshly:
 
-- New overlay files and docs — prefer `tf-devflow` in the name
+- New overlay files and docs — prefer `tf-paperclip` in the name
 - Overlay-internal identifiers that have no upstream counterpart
 
 ## Remotes
 
 ```
-origin    git@github.com:todokaizen/tf-devflow.git
+origin    git@github.com:todokaizen/tf-paperclip.git
 upstream  git@github.com:paperclipai/paperclip.git
 ```
 

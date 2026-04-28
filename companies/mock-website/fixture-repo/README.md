@@ -1,6 +1,6 @@
 # Mock Website (fixture product)
 
-Tiny static site used as a benchmark target by the TF-Devflow token-efficiency benchmark.
+Tiny static site used as a benchmark target by the TF-Paperclip token-efficiency benchmark.
 
 ## Outstanding task
 

@@ -1,6 +1,6 @@
 # Mock Website (benchmark fixture)
 
-Not a real company. A **frozen-config Paperclip package** used by the TF-Devflow token-efficiency benchmark (see `design/benchmarks/token-efficiency/`).
+Not a real company. A **frozen-config Paperclip package** used by the TF-Paperclip token-efficiency benchmark (see `design/benchmarks/token-efficiency/`).
 
 ## Import
 
@@ -29,7 +29,7 @@ pnpm paperclipai company import ./companies/mock-website --new-company-name "Moc
 
 ## Billing split (API vs subscription)
 
-Anthropic no longer supports Claude subscriptions over oauth for programmatic tools like OpenClaw. The practical TF-Devflow pattern is: orchestration agents pay per-token via the Anthropic API, the implementor consumes the subscription (where Claude Code / Max credits live).
+Anthropic no longer supports Claude subscriptions over oauth for programmatic tools like OpenClaw. The practical TF-Paperclip pattern is: orchestration agents pay per-token via the Anthropic API, the implementor consumes the subscription (where Claude Code / Max credits live).
 
 This fixture encodes that split via per-agent env in `.paperclip.yaml`:
 

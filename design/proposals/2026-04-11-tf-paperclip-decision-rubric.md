@@ -1,9 +1,9 @@
-# TF-Devflow Decision Rubric
+# TF-Paperclip Decision Rubric
 
 Date: 2026-04-11
 Status: living reference
 
-Decision aids for the recurring judgment calls in TF-Devflow operation. Use this as a quick reference when classifying work, picking spec authorship direction, evaluating spec quality at the review gate, or checking whether the framework is drifting into theater.
+Decision aids for the recurring judgment calls in TF-Paperclip operation. Use this as a quick reference when classifying work, picking spec authorship direction, evaluating spec quality at the review gate, or checking whether the framework is drifting into theater.
 
 ---
 
@@ -98,6 +98,6 @@ Use this weekly, or whenever the framework starts to feel heavy. If more than on
 
 Related:
 - design/proposals/2026-04-11-solo-operator-advice.md — the analysis behind these rubrics
-- design/proposals/2026-04-11-tf-devflow-manifesto.md — the commitments these rubrics operationalize
+- design/proposals/2026-04-11-tf-paperclip-manifesto.md — the commitments these rubrics operationalize
 - design/specs/2026-04-02-paperclip-uaw-governance-design-Phase-1.md — the architectural framework
 - design/RUNBOOK.md — operational procedures
